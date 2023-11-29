@@ -3,7 +3,7 @@ version: '3.8'
 services:
   web:
     build: ./services/web
-    command: gunicorn --bind 0.0.0.0:5000 manage:app
+    command: gunicorn --bind 0.0.0.0:5000 manage:app --reload
     volumes:
       - ./services/web/:/usr/src/app/
     ports:
@@ -12,12 +12,21 @@ services:
       - ./.env.dev
     depends_on:
       - db
-
+  parser:
+      build: ./services/parser
+      command: celery -A tasks worker --loglevel=INFO
+      env_file:
+        - ./.env.dev
+      depends_on:
+        - db
+        - redis
+  redis:
+    image: redis:6.0.10-alpine
 
   db:
     image: postgres:13
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=hello_flask
       - POSTGRES_PASSWORD=hello_flask

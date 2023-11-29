@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
-
+import os
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
+
 Base = declarative_base()
 
 
@@ -18,7 +18,7 @@ class Price(Base):
 
 class PricesPipeline:
     def open_spider(self, spider):
-        engine = create_engine('sqlite:///sqlite.db')
+        engine = create_engine(os.getenv('DATABASE_URL', 'sqlite:///sqlite.db'))
         Base.metadata.create_all(engine)
         self.session = Session(engine)
     

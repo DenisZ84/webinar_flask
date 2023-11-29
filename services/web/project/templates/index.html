@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+<html lang="ru"> 
+  <head>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="static/img/fav/fav.ico" type="image">
+    <link rel="apple-touch-icon" sizes="180x180" href="static/img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/img/fav/favicon-16x16.png">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <title>Микросервис</title>
+  </head>
+  <body>	   
+    <header class="pt-3">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">            
+            <img src="static/img/logo.svg" height="50" class="" alt="">                       
+          </a>  
+          <div class="d-flex justify-content-end">
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('mail_list') }}">
+                  Список рассылки
+                </a>
+              </li>
+            </ul>            
+          </div>       
+        </div>
+      </nav>       
+    </header>
+    <main>   
+      <section class="container my-5">
+        <div class="row">
+          <h1>Текущие цены</h1>
+          <div class="col-12 col-lg-7 my-5">            
+            <table width="100%">
+                <tr>
+                    <th>Название города</th>
+                    <th>Стоимость</th>
+                    <th>Дата</th>
+                </tr>
+            {% for price in fuel_prices %}
+            <tr>    
+            <td>{{price.city_name}}</td>
+            <td>{{price.price}}$</td>   
+            <td>{{price.date}}</td>   
+            </tr>
+            {% endfor %}
+        </table>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="fixed-bottom text-center py-3 bg-light">
+      <p class="small">© Цены на топливо</p> 
+    </footer>
+  </body>
+</html>
