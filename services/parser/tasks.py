@@ -1,11 +1,26 @@
+import time
+import random
+
 from celery import Celery
 import os
 from scrapy.crawler import CrawlerRunner
-from get_prices_scrapy.spiders.cstoredecisions import CstoredecisionsSpider
+from scrapy.settings import Settings
+from get_prices_scrapy import settings as scraper_settings
+
 
 app = Celery('tasks', broker=os.getenv('CELERY_BROKER', 'pyamqp://guest@localhost//'))
 
-@app.task
+@app.task(name='getPrices')
 def start_parsing():
-    runner = CrawlerRunner()
-    runner.crawl(CstoredecisionsSpider)
+    crawler_settings = Settings()
+    crawler_settings.setmodule(scraper_settings)
+    runner = CrawlerRunner(settings=crawler_settings)
+    runner.crawl("cstoredecisions")
+
+
+@app.task(name='addTask')  # Named task
+def add(x, y):
+    print('Task Add started')
+    time.sleep(10 * random.random())  # Simulate a long task
+    print('Task Add done')
+    return x + y

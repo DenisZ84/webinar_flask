@@ -1,8 +1,18 @@
 from . import app, db
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, jsonify
 from .models import User, Price
 from .forms import MailForm
 
+
+@app.route("/api/v1/users", methods=['GET'])
+def api_users():
+    users = [user.to_dict() for user in User.query.all()]
+    return jsonify({'users': users})
+
+@app.route("/api/v1/prices", methods=['GET'])
+def api_prices():
+    prices = [user.to_dict() for user in Price.query.all()]
+    return jsonify({'prices': prices})
 
 @app.route("/mail-list")
 def mail_list():
