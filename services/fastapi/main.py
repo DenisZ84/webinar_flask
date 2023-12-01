@@ -10,7 +10,7 @@ app = FastAPI()
 # должны обрабатываться этой функцией.
 @app.get('/', tags=['special methods', 'greetings'])
 def read_root():
-    return {'Hello': 'FastAPI'}
+    return {'Hello': 'FastAPI test'}
 
 
 @app.get(
