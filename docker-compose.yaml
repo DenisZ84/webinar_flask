@@ -20,6 +20,14 @@ services:
       - ./services/fastapi/:/usr/src/app/
     ports:
       - 8001:8000
+
+  room:
+    build: ./services/room_reservation
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./services/room_reservation/:/usr/src/app/
+    ports:
+      - 8002:8000
   parser:
       build: ./services/parser
       command: celery -A tasks worker --loglevel=INFO
