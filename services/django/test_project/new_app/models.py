@@ -4,4 +4,5 @@ from django.db import models
 class MyApp(models.Model):
     name = models.CharField(max_length=123)
     name2 = models.CharField(max_length=123)
+    name3 = models.CharField(max_length=123)
 
