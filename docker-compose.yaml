@@ -28,6 +28,13 @@ services:
       - ./services/room_reservation/:/usr/src/app/
     ports:
       - 8002:8000
+  django:
+    build: ./services/django
+    command: python manage.py runserver
+    volumes:
+      - ./services/django/:/usr/src/app/
+    ports:
+      - 8003:8000
   parser:
       build: ./services/parser
       command: celery -A tasks worker --loglevel=INFO
